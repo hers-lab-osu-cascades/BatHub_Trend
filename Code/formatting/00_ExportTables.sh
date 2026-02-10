@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Export selected tables from Access database to CSV
-SRC="DataRaw/database/PNW_BatHub_Database_20251004.accdb"
-SRC_CALLS="DataRaw/database/PNW_BatHub_Database_AcousticOutput_20251004.accdb"
-SRC_CALLS2="DataRaw/database/PNW_BatHub_Database_AcousticOutput_2024_to_Present_20251004.accdb"
+SRC<-"C:\\Users\\rosesar\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_20251004.accdb"
+SRC_CALLS="C:\\Users\\rosesar\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_AcousticOutput_20251004.accdb"
+SRC_CALLS2="C:\\Users\\rosesar\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_AcousticOutput_2024_to_Present_20251004.accdb"
 OUT="DataRaw/tables"
 
 # Make sure output folder exists
