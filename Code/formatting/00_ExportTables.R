@@ -47,3 +47,27 @@ src_calls2 <- RODBC::odbcConnectAccess2007(SRC_CALLS2)
 tblcallsfrom2024 <- RODBC::sqlFetch(src_calls2, "tblDeploymentDetection8")
 
 RODBC::odbcClose(src_calls2)
+
+# save to R files
+
+saveRDS(tblcallsfrom2024, paste0(getwd(), 
+                                 "/DataRaw/tblcallsfrom2024_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
+saveRDS(tblcallsto2023, paste0(getwd(), 
+                                 "/DataRaw/tblcallsto2023_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
+saveRDS(tblDeployment, paste0(getwd(), 
+                                 "/DataRaw/tblDeployment_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
+saveRDS(tblPointLocation, paste0(getwd(), 
+                                 "/DataRaw/tblPointLocation_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
+saveRDS(tblSite, paste0(getwd(), 
+                                 "/DataRaw/tblSite_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
+saveRDS(tluClutterType, paste0(getwd(), 
+                                 "/DataRaw/tluClutterType_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
+saveRDS(tluWaterBodyType, paste0(getwd(), 
+                                 "/DataRaw/tluWaterBodyType_dwnl_", 
+                                 format(Sys.Date(),"%Y%m%d"), ".R"))
