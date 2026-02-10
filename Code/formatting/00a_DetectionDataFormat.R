@@ -28,11 +28,29 @@ require(future.apply)
 require(parallel)
 
 # Read in Required Data ---------------------------------------------------
-tblDeployment <- read_csv(here("DataRaw/tables/tblDeployment.csv"))
-tblPointLocation <- read_csv(here("DataRaw/tables/tblPointLocation.csv"))
-tblSite <- read_csv(here("DataRaw/tables/tblSite.csv"))
-tluClutter <- read_csv(here("DataRaw/tables/tluClutterType.csv"))
-tluWaterBodyType <- read_csv(here("DataRaw/tables/tluWaterBodyType.csv"))
+# tblDeployment <- read_csv(here("DataRaw/tables/tblDeployment.csv"))
+# tblPointLocation <- read_csv(here("DataRaw/tables/tblPointLocation.csv"))
+# tblSite <- read_csv(here("DataRaw/tables/tblSite.csv"))
+# tluClutter <- read_csv(here("DataRaw/tables/tluClutterType.csv"))
+# tluWaterBodyType <- read_csv(here("DataRaw/tables/tluWaterBodyType.csv"))
+
+file_paths <- list.files(paste0(getwd(), "/DataRaw/"),
+                         
+                         pattern = "\\.R$", 
+                         
+                         full.names = TRUE)
+
+names(file_paths) <-str_remove(basename(file_paths), "_.*")
+
+data <- map(file_paths, readRDS)
+
+names(data)
+
+rm(file_paths)
+
+
+
+files <- list.files(paste0(getwd(), "/DataRaw"))
 
 
 # Set the years you want to analyze  --------------------------------------
