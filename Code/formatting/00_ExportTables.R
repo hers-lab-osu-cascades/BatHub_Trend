@@ -2,10 +2,22 @@
 # File was changed from .sh to .R from original analyses
 # Export selected tables from Access database to CSV
 
-SRC="C:\\Users\\rosesar\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_20251004.accdb"
-SRC_CALLS="C:\\Users\\rosesar\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_AcousticOutput_20251004.accdb"
-SRC_CALLS2="C:\\Users\\rosesar\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_AcousticOutput_2024_to_Present_20251004.accdb"
-OUT="DataRaw/tables"
+# set user ID ------------------------------------------
+## set your computer name 
+## ex C:\Users\mcmahonl\Box\HERS_Working\Bats\DatabaseBE would be "mcmahonl"
+user <- "rosesar"             
+
+# create filepaths -------------------------------------
+SRC = paste0("C:\\Users\\", 
+             user, 
+             "\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_20251004.accdb")
+SRC_CALLS = paste0("C:\\Users\\", 
+                   user,
+                   "\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_AcousticOutput_20251004.accdb")
+SRC_CALLS2 = paste0("C:\\Users\\", user, 
+                    "\\Box\\HERS_Working\\Bats\\DatabaseBE\\PNW_BatHub_Database_AcousticOutput_2024_to_Present_20251004.accdb")
+
+OUT = "DataRaw/tables"
 
 # Make sure output folder exists
 # mkdir -p "$OUT"
@@ -18,37 +30,37 @@ OUT="DataRaw/tables"
 # mdb-export "$SRC_CALLS" tblDeploymentDetection7 > "$OUT/calls_to_2024.csv"
 # mdb-export "$SRC_CALLS2" tblDeploymentDetection8 > "$OUT/calls_from_2024.csv"
 
-# Converting above code to R-friendly language
+## Converting above code to R-friendly language to pull from dbs
 
-## opening 3 databases and pulling tables
+# Open each database and pull tables -----------------
 
 ### database1
 src <- RODBC::odbcConnectAccess2007(SRC)
 
-## Read in Access Tables
-tblDeployment <- RODBC::sqlFetch(src,"tblDeployment")
-tblPointLocation <- RODBC::sqlFetch(src, "tblPointLocation")
-tblSite <- RODBC::sqlFetch(src, "tblSite")
-tluClutterType <- RODBC::sqlFetch(src, "tluClutterType")
-tluWaterBodyType <-RODBC::sqlFetch(src, "tluWaterBodyType")
+  ## Read in Access Tables
+  tblDeployment <- RODBC::sqlFetch(src,"tblDeployment")
+  tblPointLocation <- RODBC::sqlFetch(src, "tblPointLocation")
+  tblSite <- RODBC::sqlFetch(src, "tblSite")
+  tluClutterType <- RODBC::sqlFetch(src, "tluClutterType")
+  tluWaterBodyType <-RODBC::sqlFetch(src, "tluWaterBodyType")
 
-RODBC::odbcClose(src)
+  RODBC::odbcClose(src)
 
 ### database 2
 src_calls <- RODBC::odbcConnectAccess2007(SRC_CALLS)
 
-tblcallsto2023 <- RODBC::sqlFetch(src_calls, "tblDeploymentDetection7")
-
-RODBC::odbcClose(src_calls)
+  tblcallsto2023 <- RODBC::sqlFetch(src_calls, "tblDeploymentDetection7")
+  
+  RODBC::odbcClose(src_calls)
 
 ### database 3
 src_calls2 <- RODBC::odbcConnectAccess2007(SRC_CALLS2)
                                   
-tblcallsfrom2024 <- RODBC::sqlFetch(src_calls2, "tblDeploymentDetection8")
+  tblcallsfrom2024 <- RODBC::sqlFetch(src_calls2, "tblDeploymentDetection8")
+  
+  RODBC::odbcClose(src_calls2)
 
-RODBC::odbcClose(src_calls2)
-
-# save to R files
+# save to R files ------------------------------------
 
 saveRDS(tblcallsfrom2024, paste0(getwd(), 
                                  "/DataRaw/tblcallsfrom2024_dwnl_", 
